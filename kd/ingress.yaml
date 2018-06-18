@@ -9,17 +9,17 @@ metadata:
     ingress.kubernetes.io/secure-backends: "true"
     ingress.kubernetes.io/whitelist-source-range: "{{.WHITELIST}}"
     stable.k8s.psg.io/kcm.provider: http
-  name: pttg-rps-contact-ingress-external
+  name: pttg-rps-enquiry-ingress-external
 spec:
   tls:
   - hosts:
     - {{.DOMAIN_NAME}}
-    secretName: letsencrypt-pttg-rps-contact
+    secretName: letsencrypt-pttg-rps-enquiry
   rules:
   - host: {{.DOMAIN_NAME}}
     http:
       paths:
       - backend:
-          serviceName: pttg-rps-contact
+          serviceName: pttg-rps-enquiry
           servicePort: 443
         path: /

@@ -3,12 +3,12 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    name: pttg-rps-contact
-  name: pttg-rps-contact
+    name: pttg-rps-enquiry
+  name: pttg-rps-enquiry
 spec:
   ports:
   - name: https
     port: 443
     targetPort: 10443
   selector:
-    name: pttg-rps-contact
+    name: pttg-rps-enquiry
