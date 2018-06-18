@@ -35,7 +35,7 @@ else
     export KC_REALM=pttg-qa
 fi
 
-export DOMAIN_NAME=rps-enqiry.${DNS_PREFIX}pttg.homeoffice.gov.uk
+export DOMAIN_NAME=enqiry-rps.${DNS_PREFIX}pttg.homeoffice.gov.uk
 
 echo "DOMAIN_NAME is $DOMAIN_NAME"
 
