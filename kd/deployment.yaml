@@ -110,7 +110,7 @@ spec:
           - --redirection-url=https://{{.DOMAIN_NAME}}
           - --cors-origins='*'
           - --resources=uri=/healthz|white-listed=true
-          - --resources=uri=/|methods=GET|roles=pttg-rps
+          - --resources=uri=/|methods=GET|roles=pttg-rps-{{.ENVIRONMENT}}
           - --secure-cookie=true
           - --http-only-cookie=true
           - --verbose
