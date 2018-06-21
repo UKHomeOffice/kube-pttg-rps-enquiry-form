@@ -30,9 +30,11 @@ export WHITELIST=${WHITELIST:-0.0.0.0/0}
 if [ "${ENVIRONMENT}" == "pr" ] ; then
     export DNS_PREFIX=
     export KC_REALM=pttg-production
+    export PROD_OR_NOTPROD=prod
 else
     export DNS_PREFIX=${ENVIRONMENT}.notprod.
     export KC_REALM=pttg-qa
+    export PROD_OR_NOTPROD=notprod
 fi
 
 export DOMAIN_NAME=enquiry-rps.${DNS_PREFIX}pttg.homeoffice.gov.uk
