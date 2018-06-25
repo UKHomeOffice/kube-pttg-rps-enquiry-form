@@ -189,6 +189,8 @@ spec:
               secretKeyRef:
                 name: pttg-acp-{{.PROD_OR_NOTPROD}}-smtp
                 key: smtp_username
+          - name: SMTP_PORT
+            value: "25"
         resources:
           limits:
             cpu: 1000m
