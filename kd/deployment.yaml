@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: certs
-        image: quay.io/ukhomeofficedigital/pttg-cfssl-sidekick:build-6
+        image: quay.io/ukhomeofficedigital/cfssl-sidekick:v0.0.6
         securityContext:
           runAsNonRoot: true
           capabilities:
@@ -47,7 +47,7 @@ spec:
             mountPath: /etc/ssl/certs
             readOnly: true
       - name: proxy
-        image: quay.io/ukhomeofficedigital/nginx-proxy:v3.2.6
+        image: quay.io/ukhomeofficedigital/nginx-proxy:v3.2.9
         imagePullPolicy: Always
         securityContext:
           runAsNonRoot: true
@@ -122,7 +122,7 @@ spec:
           mountPath: /etc/secrets
           readOnly: true 
       - name: redis
-        image: quay.io/ukhomeofficedigital/redis:v0.1.1
+        image: quay.io/ukhomeofficedigital/redis:v0.1.2
         ports:
           - containerPort: 6379
         env:
