@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: pttg-rps-enquiry
   labels:
-    version: 521d023
+    version: {{.VERSION}}
 spec:
   replicas: 1
   selector:
@@ -19,7 +19,7 @@ spec:
     metadata:
       labels:
         name: pttg-rps-enquiry
-        version: 521d023
+        version: {{.VERSION}}
     spec:
       containers:
       - name: certs
@@ -136,7 +136,7 @@ spec:
         securityContext:
           runAsNonRoot: true
       - name: pttg-rps-enquiry
-        image: quay.io/ukhomeofficedigital/pttg-rps-enquiry:521d023
+        image: quay.io/ukhomeofficedigital/pttg-rps-enquiry:{{.VERSION}}
         imagePullPolicy: Always
         securityContext:
           runAsNonRoot: true
