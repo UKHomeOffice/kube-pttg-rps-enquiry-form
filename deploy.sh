@@ -3,19 +3,31 @@
 export KUBE_NAMESPACE=${KUBE_NAMESPACE}
 export KUBE_SERVER=${KUBE_SERVER}
 
+log()
+{
+    if [[ $1 == ---* ]] ; then
+        echo -e "\033[34m $1 \033[39m"
+    elif [[ $1 == \[error\]* ]] ; then
+        echo -e "\033[31m $1 \033[39m"
+    else
+        echo $1
+    fi
+}
+
 if [[ -z ${VERSION} ]] ; then
     export VERSION=${IMAGE_VERSION}
 fi
 
 if [[ ${ENVIRONMENT} == "pr" ]] ; then
-    echo "deploy ${VERSION} to pr namespace, using PTTG_RPS_PR drone secret"
+    log "--- PRODUCTION PRODUCTION PRODUCTION"
+    log "--- deploying ${VERSION} to pr namespace, using PTTG_RPS_PR drone secret"
     export KUBE_TOKEN=${PTTG_RPS_PR}
 else
     if [[ ${ENVIRONMENT} == "test" ]] ; then
-        echo "deploy ${VERSION} to test namespace, using PTTG_RPS_TEST drone secret"
+        log "--- deploying ${VERSION} to test namespace, using PTTG_RPS_TEST drone secret"
         export KUBE_TOKEN=${PTTG_RPS_TEST}
     else
-        echo "deploy ${VERSION} to dev namespace, using PTTG_RPS_DEV drone secret"
+        log "--- deploying ${VERSION} to dev namespace, using PTTG_RPS_DEV drone secret"
         export KUBE_TOKEN=${PTTG_RPS_DEV}
     fi
 fi
@@ -39,7 +51,7 @@ fi
 
 export DOMAIN_NAME=enquiry-rps.${DNS_PREFIX}pttg.homeoffice.gov.uk
 
-echo "DOMAIN_NAME is $DOMAIN_NAME"
+log "--- DOMAIN_NAME is $DOMAIN_NAME"
 
 cd kd
 
