@@ -67,8 +67,12 @@ log "--- DOMAIN_NAME is $DOMAIN_NAME"
 
 cd kd || exit
 
-kd --insecure-skip-tls-verify \
-    -f networkPolicy.yaml \
-    -f ingress.yaml \
-    -f deployment.yaml \
-    -f service.yaml
+log "--- deploying network policy"
+kd -f networkPolicy.yaml
+log "--- deploying ingress"
+kd -f ingress.yaml
+log "--- deploying deployment"
+kd -f deployment.yaml
+log "--- deploying service"
+kd -f service.yaml
+log "--- Finished!"
