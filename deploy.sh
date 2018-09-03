@@ -65,7 +65,7 @@ export DOMAIN_NAME=enquiry-rps.${DNS_PREFIX}pttg.homeoffice.gov.uk
 
 log "--- DOMAIN_NAME is $DOMAIN_NAME"
 
-cd kd
+cd kd || exit
 
 kd --insecure-skip-tls-verify \
     -f networkPolicy.yaml \
