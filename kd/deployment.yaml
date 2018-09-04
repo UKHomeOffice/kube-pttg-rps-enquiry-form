@@ -56,12 +56,12 @@ spec:
              - SETUID
              - SETGID
         resources:
-         limits:
-          memory: "100Mi"
-          cpu: 100m
-         requests:
-          memory: "50Mi"
-          cpu: 100m
+          limits:
+            memory: "100Mi"
+            cpu: 100m
+           requests:
+            memory: "50Mi"
+            cpu: 100m
         env:
           - name: PROXY_SERVICE_HOST
             value: '127.0.0.1'
@@ -92,12 +92,12 @@ spec:
         securityContext:
           runAsNonRoot: true
         resources:
-         limits:
-          memory: "100Mi"
-          cpu: 100m
-         requests:
-          memory: "50Mi"
-          cpu: 100m
+          limits:
+            memory: "100Mi"
+            cpu: 100m
+          requests:
+            memory: "50Mi"
+            cpu: 100m
         args:
           - --config=/etc/secrets/keycloak-api-secret.yaml
           - --discovery-url=https://sso.digital.homeoffice.gov.uk/auth/realms/{{.KC_REALM}}
@@ -118,9 +118,9 @@ spec:
           - name: keycloak-http
             containerPort: 9000
         volumeMounts:
-        - name: keycloak-api-secret
-          mountPath: /etc/secrets
-          readOnly: true 
+          - name: keycloak-api-secret
+            mountPath: /etc/secrets
+            readOnly: true
       - name: redis
         image: quay.io/ukhomeofficedigital/redis:v0.1.2
         ports:
@@ -216,12 +216,12 @@ spec:
           periodSeconds: 20
           timeoutSeconds: 10
         readinessProbe:
-            httpGet:
-              path: /public/images/healthz.gif
-              port: http
-              httpHeaders:
-                - name: X-probe
-                  value: kubelet
+          httpGet:
+            path: /public/images/healthz.gif
+            port: http
+            httpHeaders:
+              - name: X-probe
+                value: kubelet
             initialDelaySeconds: 20
             periodSeconds: 20
             timeoutSeconds: 10
