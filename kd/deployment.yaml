@@ -135,6 +135,10 @@ spec:
             name: data
         securityContext:
           runAsNonRoot: true
+          capabilities:
+            drop:
+             - SETUID
+             - SETGID
       - name: pttg-rps-enquiry
         image: quay.io/ukhomeofficedigital/pttg-rps-enquiry:{{.VERSION}}
         imagePullPolicy: Always
