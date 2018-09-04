@@ -73,8 +73,8 @@ log "--- DOMAIN_NAME is $DOMAIN_NAME"
 cd kd || exit
 
 log "--- deploying..."
-kd -f networkPolicy.yaml
-   -f ingress.yaml
-   -f deployment.yaml
+kd -f networkPolicy.yaml \
+   -f ingress.yaml \
+   -f deployment.yaml \
    -f service.yaml
 log "--- Finished!"
