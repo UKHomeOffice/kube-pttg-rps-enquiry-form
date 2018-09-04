@@ -121,24 +121,6 @@ spec:
         - name: keycloak-api-secret
           mountPath: /etc/secrets
           readOnly: true 
-      - name: redis
-        image: quay.io/ukhomeofficedigital/redis:v0.1.2
-        ports:
-          - containerPort: 6379
-        env:
-          - name: REDIS_PASSWORD
-            value: password
-#        command: ['/usr/bin/bash']
-#        args: ['-c', 'echo "requirepass ${REDIS_PASSWORD}" >> /etc/redis.conf && /run.sh']
-        volumeMounts:
-          - mountPath: /var/lib/redis
-            name: data
-        securityContext:
-          runAsNonRoot: true
-          capabilities:
-            drop:
-             - SETUID
-             - SETGID
       - name: pttg-rps-enquiry
         image: quay.io/ukhomeofficedigital/pttg-rps-enquiry:{{.VERSION}}
         imagePullPolicy: Always
