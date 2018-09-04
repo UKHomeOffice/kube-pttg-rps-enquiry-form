@@ -18,6 +18,11 @@ if [[ -z ${VERSION} ]] ; then
     export VERSION=${IMAGE_VERSION}
 fi
 
+if [[ -z ${VERSION} ]] ; then
+    log "[error] No version set!"
+    exit 78
+fi
+
 if [[ ${ENVIRONMENT} == "pr" ]] ; then
     log "--- PRODUCTION PRODUCTION PRODUCTION"
     log "--- deploying ${VERSION} to pr namespace, using PTTG_RPS_PR drone secret"
