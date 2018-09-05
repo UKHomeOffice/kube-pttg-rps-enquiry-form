@@ -178,23 +178,21 @@ spec:
               secretKeyRef:
                 name: db-rds-credentials
                 key: username
-          - name: SMTP_PASSWORD
+          - name: NOTIFY_API_KEY
             valueFrom:
               secretKeyRef:
-                name: pttg-acp-{{.PROD_OR_NOTPROD}}-smtp
-                key: smtp_password
-          - name: SMTP_SERVER
+                name: notify-credentials
+                key: api-key
+          - name: NOTIFY_TEMPLATE_USER_CONFIRMATION
             valueFrom:
               secretKeyRef:
-                name: pttg-acp-{{.PROD_OR_NOTPROD}}-smtp
-                key: smtp_server
-          - name: SMTP_USERNAME
+                name: notify-credentials
+                key: user-template-id
+          - name: NOTIFY_TEMPLATE_ENQUIRY_SUPPORT
             valueFrom:
               secretKeyRef:
-                name: pttg-acp-{{.PROD_OR_NOTPROD}}-smtp
-                key: smtp_username
-          - name: SMTP_PORT
-            value: "25"
+                name: notify-credentials
+                key: support-template-id
         resources:
           limits:
             cpu: 1000m
