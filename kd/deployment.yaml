@@ -207,6 +207,19 @@ spec:
           - mountPath: /certs
             name: certs
             readOnly: true
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            httpHeaders:
+            - name: X-probe
+              value: kubelet
+            path: /healthz/ping
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 20
+          periodSeconds: 60
+          successThreshold: 1
+          timeoutSeconds: 10
       volumes:
         - name: data
           emptyDir: {}
