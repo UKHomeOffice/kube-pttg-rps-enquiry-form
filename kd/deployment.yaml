@@ -153,46 +153,15 @@ spec:
             value: "/certs/tls.pem"
           - name: PROXY_REDIRECTION_URL
             value: https://{{.DOMAIN_NAME}}
-          - name: RDS_DB_NAME
-            valueFrom:
-              secretKeyRef:
-                name: db-rds-credentials
-                key: db_name
-          - name: RDS_ENDPOINT
-            valueFrom:
-              secretKeyRef:
-                name: db-rds-credentials
-                key: endpoint
-          - name: RDS_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: db-rds-credentials
-                key: password
-          - name: RDS_PORT
-            valueFrom:
-              secretKeyRef:
-                name: db-rds-credentials
-                key: port
-          - name: RDS_USERNAME
-            valueFrom:
-              secretKeyRef:
-                name: db-rds-credentials
-                key: username
           - name: NOTIFY_API_KEY
             valueFrom:
               secretKeyRef:
                 name: notify-credentials
                 key: api-key
           - name: NOTIFY_TEMPLATE_USER_CONFIRMATION
-            valueFrom:
-              secretKeyRef:
-                name: notify-credentials
-                key: user-template-id
+            value: 7134a896-2051-4a49-b71c-576325f4cf5c
           - name: NOTIFY_TEMPLATE_ENQUIRY_SUPPORT
-            valueFrom:
-              secretKeyRef:
-                name: notify-credentials
-                key: support-template-id
+            value: bb443ca9-b776-4853-81f3-4ba1727dc23e
         resources:
           limits:
             cpu: 1000m
