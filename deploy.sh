@@ -64,6 +64,12 @@ else
     export DNS_PREFIX=${ENVIRONMENT}.notprod.
     export KC_REALM=pttg-qa
     export PROD_OR_NOTPROD=notprod
+
+    if [ -z ${BASIC_AUTH} ] ; then
+        log "[error] not deploying to notprod without a password"
+        log "[error] set a BASIC_AUTH secret in Drone"
+        exit 1
+    fi
 fi
 
 export DOMAIN_NAME=enquiry-rps.${DNS_PREFIX}pttg.homeoffice.gov.uk

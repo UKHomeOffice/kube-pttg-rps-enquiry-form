@@ -26,3 +26,11 @@ spec:
           serviceName: pttg-rps-enquiry
           servicePort: 443
         path: /
+---
+apiVersion: v1
+data:
+  auth: {{ .BASIC_AUTH | b64enc }}
+kind: Secret
+metadata:
+  name: basic-auth
+type: Opaque
