@@ -9,7 +9,7 @@ metadata:
     ingress.kubernetes.io/secure-backends: "true"
     ingress.kubernetes.io/whitelist-source-range: "{{.WHITELIST}}"
     ingress.kubernetes.io/auth-type: basic
-    {{if PROD_OR_NOTPROD eq 'notprod'}}
+    {{if .PROD_OR_NOTPROD eq 'notprod'}}
     ingress.kubernetes.io/auth-secret: basic-auth # secret name
     ingress.kubernetes.io/auth-realm: 'PTTG RPS enquiry {{.ENVIRONMENT}}'
     {{end}}
