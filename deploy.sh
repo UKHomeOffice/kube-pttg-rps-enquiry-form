@@ -73,7 +73,7 @@ log "--- DOMAIN_NAME is $DOMAIN_NAME"
 cd kd || exit 1
 
 log "--- deploying redis..."
-if ! kd -f redis/networkPolicy.yaml \
+if ! kd -f redis/network-policy.yaml \
         -f redis/deployment.yaml \
         -f redis/service.yaml; then
     log "[error] cannot deploy redis"
