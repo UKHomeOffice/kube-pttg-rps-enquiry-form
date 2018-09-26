@@ -84,7 +84,7 @@ log "--- Finished!"
 
 log "--- deploying pttg-rps-enquiry..."
 kd -f pttg-rps-enquiry/network-policy.yaml \
-   -f pttg-rps-enquiry/ingress.yaml \
+   -f pttg-rps-enquiry/ingress-${PROD_OR_NOTPROD}.yaml \
    -f pttg-rps-enquiry/deployment.yaml \
    -f pttg-rps-enquiry/service.yaml
 
