@@ -70,11 +70,22 @@ export DOMAIN_NAME=enquiry-rps.${DNS_PREFIX}pttg.homeoffice.gov.uk
 
 log "--- DOMAIN_NAME is $DOMAIN_NAME"
 
-cd kd || exit
+cd kd || exit 1
 
-log "--- deploying..."
-kd -f networkPolicy.yaml \
-   -f ingress.yaml \
-   -f deployment.yaml \
-   -f service.yaml
+log "--- deploying redis..."
+if ! kd -f redis/networkPolicy.yaml \
+        -f redis/deployment.yaml \
+        -f redis/service.yaml; then
+    log "[error] cannot deploy redis"
+    exit 1
+fi
+
+log "--- Finished!"
+
+log "--- deploying pttg-rps-enquiry..."
+kd -f pttg-rps-enquiry/network-policy.yaml \
+   -f pttg-rps-enquiry/ingress.yaml \
+   -f pttg-rps-enquiry/deployment.yaml \
+   -f pttg-rps-enquiry/service.yaml
+
 log "--- Finished!"
