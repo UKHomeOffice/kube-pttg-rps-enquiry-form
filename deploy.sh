@@ -66,9 +66,7 @@ else
     export PROD_OR_NOTPROD=notprod
 
     if [ -z ${BASIC_AUTH} ] ; then
-        log "[error] not deploying to notprod without a password"
-        log "[error] set a BASIC_AUTH secret in Drone"
-        exit 1
+        log "[warn] BASIC_AUTH not set -- you might not be able to access ingress"
     fi
 fi
 
