@@ -7,7 +7,7 @@ spec:
   - from:
     - podSelector:
         matchLabels:
-          name: app
+          name: pttg-rps-enquiry
     ports:
     - port: 6379
       protocol: TCP
