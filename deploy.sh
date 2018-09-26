@@ -74,6 +74,8 @@ cd kd || exit 1
 
 log "--- deploying redis..."
 if ! kd -f redis/network-policy.yaml \
+        -f redis/secret.yaml \
+        -f redis/deployment.yaml \
         -f redis/deployment.yaml \
         -f redis/service.yaml; then
     log "[error] cannot deploy redis"
