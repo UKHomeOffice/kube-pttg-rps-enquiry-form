@@ -144,6 +144,8 @@ spec:
              - SETUID
              - SETGID
         env:
+          - name: REDIS_HOST
+            value: redis
           - name: REDIS_PASSWORD
             valueFrom:
               secretKeyRef:
