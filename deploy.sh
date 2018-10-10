@@ -23,11 +23,17 @@ if [[ -z ${VERSION} ]] ; then
     exit 78
 fi
 
+
 if [[ ${ENVIRONMENT} == "pr" ]] ; then
     log "--- PRODUCTION PRODUCTION PRODUCTION"
     log "--- deploying ${VERSION} to pr namespace, using PTTG_RPS_PR drone secret"
     export KUBE_TOKEN=${PTTG_RPS_PR}
     export CA_URL="https://raw.githubusercontent.com/UKHomeOffice/acp-ca/master/acp-prod.crt"
+    if [[ -z ${NOTIFY_RECIPIENT_PROD} ]] ; then
+        log "[error] Deploying to production but NOTIFY_RECIPIENT_PROD not set"
+        exit 78
+    fi
+    export NOTIFY_RECIPIENT=$NOTIFY_RECIPIENT_PROD
 else
     export CA_URL="https://raw.githubusercontent.com/UKHomeOffice/acp-ca/master/acp-notprod.crt"
     if [[ ${ENVIRONMENT} == "test" ]] ; then
@@ -37,7 +43,16 @@ else
         log "--- deploying ${VERSION} to dev namespace, using PTTG_RPS_DEV drone secret"
         export KUBE_TOKEN=${PTTG_RPS_DEV}
     fi
+    if [[ -z ${NOTIFY_RECIPIENT_NOTPROD} ]] ; then
+        log "--- no NOTIFY_RECIPIENT set"
+        log "--- using GOV.UK Notify integration test email"
+        log "--- emails will pretend to send but won't show up on GOV.UK Notify dashboard"
+        export NOTIFY_RECIPIENT_NOTPROD="simulate-delivered@notifications.service.gov.uk"
+    fi
+    export NOTIFY_RECIPIENT=$NOTIFY_RECIPIENT_NOTPROD
 fi
+
+log "--- emails are going to be sent to $NOTIFY_RECIPIENT"
 
 if [[ -z ${KUBE_TOKEN} ]] ; then
     log "[error] Failed to find a value for KUBE_TOKEN - exiting"
@@ -65,7 +80,7 @@ else
     export KC_REALM=pttg-qa
     export PROD_OR_NOTPROD=notprod
 
-    if [ -z ${BASIC_AUTH} ] ; then
+    if [[ -z ${BASIC_AUTH} ]] ; then
         log "[warn] BASIC_AUTH not set -- you might not be able to access ingress"
     fi
 fi
