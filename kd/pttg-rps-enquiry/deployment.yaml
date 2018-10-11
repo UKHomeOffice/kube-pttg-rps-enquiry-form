@@ -116,6 +116,13 @@ spec:
             value: 7134a896-2051-4a49-b71c-576325f4cf5c
           - name: NOTIFY_TEMPLATE_ENQUIRY_SUPPORT
             value: bb443ca9-b776-4853-81f3-4ba1727dc23e
+          - name: NODE_ENV
+            value: production
+          - name: SESSION_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: hof-session-secret
+                key: secret
         resources:
           limits:
             cpu: 1000m
