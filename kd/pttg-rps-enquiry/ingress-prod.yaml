@@ -13,7 +13,7 @@ metadata:
 spec:
   tls:
   - hosts:
-    - settlement-enquiry-form.eue.homeoffice.gov.uk
+    - {{.DOMAIN_NAME}}
     secretName: letsencrypt-pttg-rps-enquiry
   rules:
   - host: {{.DOMAIN_NAME}}
