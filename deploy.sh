@@ -75,19 +75,20 @@ if [ "${ENVIRONMENT}" == "pr" ] ; then
     export DNS_PREFIX=
     export KC_REALM=pttg-production
     export PROD_OR_NOTPROD=prod
+    export DOMAIN_NAME=settlement-enquiry-form.eue.homeoffice.gov.uk
 else
     export DNS_PREFIX=${ENVIRONMENT}.notprod.
     export KC_REALM=pttg-qa
     export PROD_OR_NOTPROD=notprod
+    export DOMAIN_NAME=enquiry-rps.${DNS_PREFIX}pttg.homeoffice.gov.uk
+
 
     if [[ -z ${BASIC_AUTH} ]] ; then
         log "[warn] BASIC_AUTH not set -- you might not be able to access ingress"
     fi
 fi
 
-export DOMAIN_NAME=enquiry-rps.${DNS_PREFIX}pttg.homeoffice.gov.uk
-
-log "--- DOMAIN_NAME is $DOMAIN_NAME"
+    log "--- DOMAIN_NAME is $DOMAIN_NAME"
 
 cd kd || exit 1
 
@@ -106,6 +107,7 @@ log "--- Finished!"
 log "--- deploying pttg-rps-enquiry..."
 kd -f pttg-rps-enquiry/network-policy.yaml \
    -f pttg-rps-enquiry/ingress-${PROD_OR_NOTPROD}.yaml \
+   -f pttg-rps-enquiry/secret.yaml \
    -f pttg-rps-enquiry/deployment.yaml \
    -f pttg-rps-enquiry/service.yaml
 

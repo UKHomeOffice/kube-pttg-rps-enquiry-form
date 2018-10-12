@@ -112,6 +112,15 @@ spec:
               secretKeyRef:
                 name: notify-credentials
                 key: api-key
+          - name: NOTIFY_RECIPIENT
+            value: {{.NOTIFY_RECIPIENT}}
+          - name: NODE_ENV
+            value: production
+          - name: SESSION_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: hof-session-secret
+                key: hof-session-secret
         resources:
           limits:
             cpu: 1000m
