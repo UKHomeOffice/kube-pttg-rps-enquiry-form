@@ -64,15 +64,15 @@ else
     export DNS_PREFIX=${ENVIRONMENT}.notprod.
     export KC_REALM=pttg-qa
     export PROD_OR_NOTPROD=notprod
+    export DOMAIN_NAME=enquiry-rps.${DNS_PREFIX}pttg.homeoffice.gov.uk
+
+    log "--- DOMAIN_NAME is $DOMAIN_NAME"
 
     if [ -z ${BASIC_AUTH} ] ; then
         log "[warn] BASIC_AUTH not set -- you might not be able to access ingress"
     fi
 fi
 
-export DOMAIN_NAME=enquiry-rps.${DNS_PREFIX}pttg.homeoffice.gov.uk
-
-log "--- DOMAIN_NAME is $DOMAIN_NAME"
 
 cd kd || exit 1
 
