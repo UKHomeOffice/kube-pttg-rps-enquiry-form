@@ -87,14 +87,22 @@ else
     if [[ -z ${BASIC_AUTH} ]] ; then
         log "[warn] BASIC_AUTH not set -- you might not be able to access ingress"
     fi
+
 fi
 
     log "--- DOMAIN_NAME is $DOMAIN_NAME"
 
 cd kd || exit 1
 
+if [ -z "$DRY_RUN" ] ; then
+  export KD_ARGS=""
+else
+  export KD_ARGS="--dryrun"
+fi
+
 log "--- deploying redis..."
-if ! kd -f redis/network-policy.yaml \
+if ! kd $KD_ARGS
+        -f redis/network-policy.yaml \
         -f redis/secret.yaml \
         -f redis/deployment.yaml \
         -f redis/deployment.yaml \
@@ -106,7 +114,8 @@ fi
 log "--- Finished!"
 
 log "--- deploying pttg-rps-enquiry..."
-kd -f pttg-rps-enquiry/network-policy.yaml \
+kd $KD_ARGS \
+   -f pttg-rps-enquiry/network-policy.yaml \
    -f pttg-rps-enquiry/ingress-${PROD_OR_NOTPROD}.yaml \
    -f pttg-rps-enquiry/secret.yaml \
    -f pttg-rps-enquiry/deployment.yaml \
