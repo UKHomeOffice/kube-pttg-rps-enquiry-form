@@ -101,7 +101,7 @@ else
 fi
 
 log "--- deploying redis..."
-if ! kd $KD_ARGS
+if ! kd $KD_ARGS \
         -f redis/network-policy.yaml \
         -f redis/secret.yaml \
         -f redis/deployment.yaml \
