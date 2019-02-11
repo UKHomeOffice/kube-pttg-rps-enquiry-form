@@ -96,6 +96,21 @@ spec:
              - SETUID
              - SETGID
         env:
+          - name: NOTIFY_BEARER_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: notify-credentials
+                key: notify-bearer
+          - name: SLACK_WEBHOOK_URL
+            valueFrom:
+              configMapKeyRef:
+                name: slack-config
+                key: slack-webhook-url
+          - name: SLACK_CHANNEL_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: slack-config
+                key: slack-channel-name
           - name: REDIS_HOST
             value: redis
           - name: REDIS_PASSWORD
