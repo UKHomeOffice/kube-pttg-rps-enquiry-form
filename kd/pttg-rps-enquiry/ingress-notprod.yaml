@@ -9,9 +9,6 @@ metadata:
     ingress.kubernetes.io/secure-backends: "true"     # TODO Remove this once ACP have upgraded ingress controller 0.21.0
     ingress.kubernetes.io/backend-protocol: "HTTPS"
     ingress.kubernetes.io/whitelist-source-range: "{{.WHITELIST}}"
-    ingress.kubernetes.io/auth-type: basic
-    ingress.kubernetes.io/auth-secret: basic-auth # secret name
-    ingress.kubernetes.io/auth-realm: 'PTTG RPS enquiry {{.ENVIRONMENT}}'
     stable.k8s.psg.io/kcm.provider: http
   name: pttg-rps-enquiry-ingress-external
 spec:
@@ -27,11 +24,4 @@ spec:
           serviceName: pttg-rps-enquiry
           servicePort: 443
         path: /
----
-apiVersion: v1
-data:
-  auth: {{ .BASIC_AUTH | b64enc }}
-kind: Secret
-metadata:
-  name: basic-auth
-type: Opaque
+
