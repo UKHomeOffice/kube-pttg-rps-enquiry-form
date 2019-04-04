@@ -136,6 +136,8 @@ spec:
               secretKeyRef:
                 name: hof-session-secret
                 key: hof-session-secret
+          - name: USE_SECURE_COOKIE
+            value: {{.USE_SECURE_COOKIE}}
         resources:
           limits:
             cpu: 1000m
