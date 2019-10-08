@@ -113,11 +113,15 @@ fi
 log "--- Finished!"
 
 log "--- deploying pttg-rps-enquiry..."
-kd $KD_ARGS \
-   -f pttg-rps-enquiry/network-policy.yaml \
-   -f pttg-rps-enquiry/ingress-${PROD_OR_NOTPROD}.yaml \
-   -f pttg-rps-enquiry/secret.yaml \
-   -f pttg-rps-enquiry/deployment.yaml \
-   -f pttg-rps-enquiry/service.yaml
+
+if ! kd $KD_ARGS \
+      -f pttg-rps-enquiry/network-policy.yaml \
+      -f pttg-rps-enquiry/ingress-${PROD_OR_NOTPROD}.yaml \
+      -f pttg-rps-enquiry/secret.yaml \
+      -f pttg-rps-enquiry/deployment.yaml \
+      -f pttg-rps-enquiry/service.yaml ; then
+      log "[error] failed to deploy"
+      exit 1
+fi
 
 log "--- Finished!"
