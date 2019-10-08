@@ -122,5 +122,6 @@ if ! kd $KD_ARGS \
       -f pttg-rps-enquiry/service.yaml
       log "[error] failed to deploy"
       exit 1
+fi
 
 log "--- Finished!"
