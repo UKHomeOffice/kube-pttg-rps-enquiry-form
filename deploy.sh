@@ -74,12 +74,10 @@ export WHITELIST=${WHITELIST:-0.0.0.0/0}
 if [ "${ENVIRONMENT}" == "pr" ] ; then
     export DNS_PREFIX=
     export KC_REALM=pttg-production
-    export PROD_OR_NOTPROD=prod
     export DOMAIN_NAME=eu-settled-status-enquiries.service.gov.uk
 else
     export DNS_PREFIX=${ENVIRONMENT}.notprod.
     export KC_REALM=pttg-qa
-    export PROD_OR_NOTPROD=notprod
     export DOMAIN_NAME=enquiry-rps.${DNS_PREFIX}pttg.homeoffice.gov.uk
 
 
@@ -116,7 +114,7 @@ log "--- deploying pttg-rps-enquiry..."
 
 if ! kd $KD_ARGS \
       -f pttg-rps-enquiry/network-policy.yaml \
-      -f pttg-rps-enquiry/ingress-${PROD_OR_NOTPROD}.yaml \
+      -f pttg-rps-enquiry/ingress.yaml \
       -f pttg-rps-enquiry/secret.yaml \
       -f pttg-rps-enquiry/deployment.yaml \
       -f pttg-rps-enquiry/service.yaml ; then
