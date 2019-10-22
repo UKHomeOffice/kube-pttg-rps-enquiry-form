@@ -11,7 +11,7 @@ metadata:
     stable.k8s.psg.io/kcm.provider: http
     ingress.kubernetes.io/enable-modsecurity: "true"
     ingress.kubernetes.io/enable-owasp-modsecurity-crs: "true"
-  name: pttg-rps-enquiry-ingress-external-govuk
+  name: pttg-rps-enquiry-ingress-external
 spec:
   tls:
   - hosts:
