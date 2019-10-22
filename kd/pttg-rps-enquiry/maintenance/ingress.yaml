@@ -16,7 +16,7 @@ spec:
   tls:
   - hosts:
     - {{.DOMAIN_NAME}}
-    secretName: letsencrypt-pttg-euro-tlr-enquiry-form
+    secretName: letsencrypt-pttg-rps-enquiry
   rules:
   - host: {{.DOMAIN_NAME}}
     http:
