@@ -120,21 +120,17 @@ if ! kd $KD_ARGS \
 fi
 log "--- Finished!"
 
-INGRESS=pttg-rps-enquiry-form/ingress.yaml
+INGRESS=pttg-rps-enquiry/ingress.yaml
 if [ "${USE_MAINTENANCE_INGRESS}" == "true" ] ; then
   log "--- Using the maintenance ingress."
-  INGRESS=pttg-rps-enquiry-form/maintenance/ingress.yaml
+  INGRESS=pttg-rps-enquiry/maintenance/ingress.yaml
 fi
 
 log "--- deploying pttg-rps-enquiry..."
 
 if ! kd $KD_ARGS \
       -f pttg-rps-enquiry/network-policy.yaml \
-<<<<<<< HEAD
-      -f pttg-rps-enquiry/ingress.yaml \
-=======
       -f $INGRESS \
->>>>>>> EE-27635 Adding the ability to deploy  a maintenance ingress for the EUSS enquiry form
       -f pttg-rps-enquiry/secret.yaml \
       -f pttg-rps-enquiry/deployment.yaml \
       -f pttg-rps-enquiry/service.yaml ; then
