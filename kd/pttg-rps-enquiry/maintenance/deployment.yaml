@@ -87,7 +87,7 @@ spec:
           - name: https
             containerPort: 10443
       - name:  pttg-rps-enquiry-maintenance
-        image: quay.io/ukhomeofficedigital/pttg-enquiry-form-maintenance:build-21
+        image: quay.io/ukhomeofficedigital/pttg-enquiry-form-maintenance:EE-28042-Language-Translation-Placement-on-Maintenance-Page
         imagePullPolicy: IfNotPresent
         securityContext:
           runAsNonRoot: true
