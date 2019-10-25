@@ -110,11 +110,27 @@ fi
 
 log "--- Finished!"
 
+log "--- deploying pttg-rps-enquiry-maintenance"
+if ! kd $KD_ARGS \
+        -f pttg-rps-enquiry/maintenance/ingress.yaml \
+        -f pttg-rps-enquiry/maintenance/deployment.yaml \
+        -f pttg-rps-enquiry/maintenance/service.yaml ; then
+  log "[error] cannot deploy pttg-rps-enquiry-maintenance"
+  exit 1
+fi
+log "--- Finished!"
+
+INGRESS=pttg-rps-enquiry/ingress.yaml
+if [ "${USE_MAINTENANCE_INGRESS}" == "true" ] ; then
+  log "--- Using the maintenance ingress."
+  INGRESS=pttg-rps-enquiry/maintenance/ingress.yaml
+fi
+
 log "--- deploying pttg-rps-enquiry..."
 
 if ! kd $KD_ARGS \
       -f pttg-rps-enquiry/network-policy.yaml \
-      -f pttg-rps-enquiry/ingress.yaml \
+      -f $INGRESS \
       -f pttg-rps-enquiry/secret.yaml \
       -f pttg-rps-enquiry/deployment.yaml \
       -f pttg-rps-enquiry/service.yaml ; then
