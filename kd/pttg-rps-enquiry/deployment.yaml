@@ -1,5 +1,5 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion:  apps/v1
 kind: Deployment
 metadata:
   name: pttg-rps-enquiry
@@ -12,8 +12,8 @@ spec:
       name: pttg-rps-enquiry
   strategy:
     rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 2
+      maxUnavailable: 0%
+      maxSurge: 50%
     type: RollingUpdate
   template:
     metadata:
