@@ -2,6 +2,7 @@
 
 export KUBE_NAMESPACE=${KUBE_NAMESPACE}
 export KUBE_SERVER=${KUBE_SERVER}
+export DEPLOYMENT_NAME=${DEPLOYMENT_NAME:-pttg-rps-enquiry}
 
 log()
 {
@@ -34,6 +35,7 @@ if [[ ${ENVIRONMENT} == "pr" ]] ; then
         exit 78
     fi
     export NOTIFY_RECIPIENT=$NOTIFY_RECIPIENT_PROD
+    export CERT_ISSUER=letsencrypt-prod
 else
     export CA_URL="https://raw.githubusercontent.com/UKHomeOffice/acp-ca/master/acp-notprod.crt"
     if [[ ${ENVIRONMENT} == "test" ]] ; then
@@ -50,6 +52,7 @@ else
         export NOTIFY_RECIPIENT_NOTPROD="simulate-delivered@notifications.service.gov.uk"
     fi
     export NOTIFY_RECIPIENT=$NOTIFY_RECIPIENT_NOTPROD
+    export CERT_ISSUER=letsencrypt-staging
 fi
 
 log "--- emails are going to be sent to $NOTIFY_RECIPIENT"
@@ -110,9 +113,32 @@ fi
 
 log "--- Finished!"
 
+log "--- deploying Ingress Certificate "
+if ! kd $KD_ARGS \
+        -f pttg-rps-enquiry/ingress-certificate.yaml; then
+  log "[error] cannot deploy Ingress Certificate"
+  exit 1
+fi
+log "--- Finished!"
+
+
+log "--- deploying Ingress "
+INGRESS=pttg-rps-enquiry/ingress.yaml
+if [ "${USE_MAINTENANCE_INGRESS}" == "true" ] ; then
+  log "--- Using the maintenance ingress."
+  INGRESS=pttg-rps-enquiry/maintenance/ingress.yaml
+fi
+
+if ! kd $KD_ARGS \
+        -f $INGRESS; then
+  log "[error] cannot deploy Ingress"
+  exit 1
+fi
+log "--- Finished!"
+
+
 log "--- deploying pttg-rps-enquiry-maintenance"
 if ! kd $KD_ARGS \
-        -f pttg-rps-enquiry/maintenance/ingress.yaml \
         -f pttg-rps-enquiry/maintenance/deployment.yaml \
         -f pttg-rps-enquiry/maintenance/service.yaml ; then
   log "[error] cannot deploy pttg-rps-enquiry-maintenance"
@@ -120,17 +146,11 @@ if ! kd $KD_ARGS \
 fi
 log "--- Finished!"
 
-INGRESS=pttg-rps-enquiry/ingress.yaml
-if [ "${USE_MAINTENANCE_INGRESS}" == "true" ] ; then
-  log "--- Using the maintenance ingress."
-  INGRESS=pttg-rps-enquiry/maintenance/ingress.yaml
-fi
 
 log "--- deploying pttg-rps-enquiry..."
 
 if ! kd $KD_ARGS \
       -f pttg-rps-enquiry/network-policy.yaml \
-      -f $INGRESS \
       -f pttg-rps-enquiry/secret.yaml \
       -f pttg-rps-enquiry/deployment.yaml \
       -f pttg-rps-enquiry/service.yaml ; then

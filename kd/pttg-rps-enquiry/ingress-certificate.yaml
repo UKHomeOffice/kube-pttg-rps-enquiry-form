@@ -1,0 +1,15 @@
+---
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: {{ .DEPLOYMENT_NAME }}-external-tls-cmio
+  labels:
+    cert-manager.io/solver: http01
+spec:
+  secretName: letsencrypt-{{ .DEPLOYMENT_NAME }}-cmio
+  issuerRef:
+    name: {{ .CERT_ISSUER | quote }}
+    kind: ClusterIssuer
+    group: cert-manager.io
+  dnsNames:
+    - {{ .DOMAIN_NAME | quote }}
