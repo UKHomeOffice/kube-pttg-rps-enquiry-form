@@ -1,27 +1,30 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  labels:
-    stable.k8s.psg.io/kcm.class: default
+  name: pttg-rps-enquiry-maintenance-ingress-external
   annotations:
     kubernetes.io/ingress.class: "nginx-external"
+    cert-manager.io/enabled: "true"
+    ingress.kubernetes.io/affinity: cookie
+    ingress.kubernetes.io/force-ssl-redirect: "true"
     ingress.kubernetes.io/backend-protocol: "HTTPS"
-    ingress.kubernetes.io/whitelist-source-range: "{{.WHITELIST}}"
-    stable.k8s.psg.io/kcm.provider: http
+    ingress.kubernetes.io/session-cookie-name: ingress
     ingress.kubernetes.io/enable-modsecurity: "true"
     ingress.kubernetes.io/enable-owasp-modsecurity-crs: "true"
-  name: pttg-rps-enquiry-ingress-external
+    ingress.kubernetes.io/whitelist-source-range: {{ .WHITELIST | quote}}
+  labels:
+    cert-manager.io/solver: http01
 spec:
   tls:
   - hosts:
-    - {{.DOMAIN_NAME}}
-    secretName: letsencrypt-pttg-rps-enquiry
+    - {{ .DOMAIN_NAME | quote }}
+    secretName: "letsencrypt-{{ .DEPLOYMENT_NAME }}-cmio"
   rules:
-  - host: {{.DOMAIN_NAME}}
+  - host: {{ .DOMAIN_NAME | quote }}
     http:
       paths:
       - backend:
-          serviceName: pttg-rps-enquiry-maintenance
+          serviceName: "{{ .DEPLOYMENT_NAME }}-maintenance"
           servicePort: 443
         path: /
