@@ -136,6 +136,14 @@ if ! kd $KD_ARGS \
 fi
 log "--- Finished!"
 
+log "--- deploying pod to pod cert "
+if ! kd $KD_ARGS \
+      -f pod-to-pod-server-certificate.yaml; then
+      log "[error] failed to deploy pod to pod certificate"
+      exit 1
+fi
+log "--- Finished!"
+
 
 log "--- deploying pttg-rps-enquiry-maintenance"
 if ! kd $KD_ARGS \
