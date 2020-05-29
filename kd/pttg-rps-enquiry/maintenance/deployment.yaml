@@ -22,30 +22,6 @@ spec:
         version: {{.VERSION}}
     spec:
       containers:
-      - name: certs
-        image: quay.io/ukhomeofficedigital/cfssl-sidekick:v0.0.6
-        securityContext:
-          runAsNonRoot: true
-          capabilities:
-            drop:
-             - SETUID
-             - SETGID
-        args:
-          - --certs=/certs
-          - --domain=pttg-rps-enquiry-maintenance.${KUBE_NAMESPACE}.svc.cluster.local
-          - --expiry=8760h
-          - --command=/usr/local/scripts/trigger_nginx_reload.sh
-        env:
-          - name: KUBE_NAMESPACE
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.namespace
-        volumeMounts:
-          - name: certs
-            mountPath: /certs
-          - name: bundle
-            mountPath: /etc/ssl/certs
-            readOnly: true
       - name: proxy
         image: quay.io/ukhomeofficedigital/pttg-rps-enquiry-proxy:build-19
         imagePullPolicy: IfNotPresent
@@ -74,9 +50,9 @@ spec:
           - name: HTTPS_REDIRECT
             value: 'FALSE'
           - name: SERVER_CERT
-            value: /certs/tls.pem
+            value: /certs/tls.crt
           - name: SERVER_KEY
-            value: /certs/tls-key.pem
+            value: /certs/tls.key
           - name: ADD_NGINX_SERVER_CFG
             value: 'gzip off; location = /reload { allow 127.0.0.1; deny all; content_by_lua_block { os.execute("touch /tmp/nginx-reload-triggered; /usr/local/openresty/nginx/sbin/nginx -s reload; touch /tmp/nginx-reload-complete;") } }'
         volumeMounts:
@@ -107,8 +83,8 @@ spec:
             containerPort: 8080
       volumes:
         - name: certs
-          emptyDir:
-            medium: "Memory"
+          secret:
+            secretName: {{ .DEPLOYMENT_NAME }}-service-tls-cmio
         - name: bundle
           configMap:
             name: bundle
