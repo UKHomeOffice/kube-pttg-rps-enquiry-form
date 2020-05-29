@@ -1,0 +1,16 @@
+---
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: {{ .DEPLOYMENT_NAME }}-service-tls
+  labels:
+    cert-manager.io/solver: http01
+spec:
+  secretName: {{ .DEPLOYMENT_NAME }}-service-tls-cmio
+  issuerRef:
+    name: platform-ca
+    kind: ClusterIssuer
+  dnsNames:
+    - {{ .DEPLOYMENT_NAME }}.{{ .KUBE_NAMESPACE }}.svc.cluster.local
+    - {{ .DEPLOYMENT_NAME }}
+    - {{ .DEPLOYMENT_NAME }}.{{ .KUBE_NAMESPACE }}.svc
