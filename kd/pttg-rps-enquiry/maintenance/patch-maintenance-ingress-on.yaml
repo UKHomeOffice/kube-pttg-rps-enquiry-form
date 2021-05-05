@@ -1,0 +1,9 @@
+spec:
+  rules:
+  - host: eu-settled-status-enquiries.service.gov.uk
+    http:
+      paths:
+      - backend:
+          serviceName: pttg-rps-enquiry-maintenance
+          servicePort: 443
+        path: /
