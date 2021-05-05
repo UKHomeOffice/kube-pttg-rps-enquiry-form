@@ -1,0 +1,3 @@
+#!/bin/bash
+
+kubectl patch ingress pttg-rps-enquiry-maintenance-ingress-external --patch "$(cat kd/pttg-rps-enquiry/maintenance/patch-maintenance-ingress-on.yaml)"
